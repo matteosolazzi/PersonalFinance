@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
     categoryId: string; name: string; broker?: string; isPrivateEquity?: boolean;
     isShares?: boolean; geoAllocUs?: number; geoAllocDevExUs?: number; geoAllocEm?: number; displayOrder?: number;
   }) => {
-    const existing = await prisma.assetItem.findFirst({ where: { name: data.name, categoryId: data.categoryId } });
+    const existing = await prisma.assetItem.findFirst({ where: { name: data.name, categoryId: data.categoryId, broker: data.broker ?? null } });
     if (existing) return existing;
     return prisma.assetItem.create({ data });
   };
