@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function GET(request: Request) {
   // Vercel cron auth
   const authHeader = request.headers.get("authorization");
@@ -30,6 +28,7 @@ export async function GET(request: Request) {
 
   const year = now.getFullYear();
 
+  const resend = new Resend(process.env.RESEND_API_KEY);
   await resend.emails.send({
     from: "Finance App <noreply@yourdomain.com>",
     to: process.env.NOTIFICATION_EMAIL!,
