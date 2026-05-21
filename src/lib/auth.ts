@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma";
 const ALLOWED_EMAIL = process.env.ALLOWED_EMAIL ?? "matteosolazzi1997@gmail.com";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  trustHost: true,
   adapter: PrismaAdapter(prisma),
   providers: [
     Google({
