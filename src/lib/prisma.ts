@@ -6,7 +6,12 @@ const globalForPrisma = globalThis as unknown as {
 };
 
 function createPrismaClient() {
-  const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
+  // Vercel Postgres injects POSTGRES_URL; fallback to DATABASE_URL
+  const connectionString =
+    process.env.POSTGRES_URL ??
+    process.env.DATABASE_URL ??
+    "";
+  const adapter = new PrismaPg({ connectionString });
   return new PrismaClient({
     adapter,
     log: process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
